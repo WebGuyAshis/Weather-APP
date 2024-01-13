@@ -1,0 +1,18 @@
+.days-container{
+    background-color: aliceblue;
+    height: 200px;
+    width: 150px;
+    border-radius: 10px;
+    cursor: pointer;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.days-container p{
+    text-align: center;
+}
+
+/* .weather-day-img{
+
+} */
