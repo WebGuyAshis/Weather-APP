@@ -92,7 +92,12 @@
     border-radius: 15px;
     padding: 15px;
 }
-
+.widgets h1{
+    font-size: 3rem;
+}
+.widgets b{
+    font-size: 3rem;
+}
 .sunrise-sunset{
     width: 350px;
     background-color: rgb(187, 232, 255);

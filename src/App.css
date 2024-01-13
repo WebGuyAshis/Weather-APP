@@ -2,3 +2,11 @@
   width: 100%;
   background-color: rgb(255, 255, 255);
 }
+::-webkit-scrollbar {
+  width: 1em;
+  height: 10px;
+}
+ 
+::-webkit-scrollbar-thumb {
+  background-color: rgb(212, 212, 212);
+}

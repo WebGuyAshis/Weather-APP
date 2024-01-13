@@ -1,12 +1,12 @@
 import '../assets/css/days.css'
 import sunnyImg from '../assets/images/sunny.png'
 
-const Days = ()=>{
+const Days = ({day})=>{
     return(
         <div className="days-container">
             <img src={sunnyImg} alt="" className='weather-day-img' />
-            <p>Mon</p>
-            <p>17&#176;</p>
+            <p>{day.date}</p>
+            <p>{day.minTempCelsius}&#176;/{day.maxTempCelsius}&#176;</p>
         </div>
     )
 }
