@@ -13,6 +13,35 @@
     display: flex;
     overflow: hidden;
     border: 1px solid rgb(189, 189, 189);
+    
+}
+
+.search-results-container{
+    position: relative;
+    margin-left: 20px;
+}
+
+.search-results-items{
+    padding: 5px 10px;
+    transition: all 0.3s;
+}
+.search-results-items:hover{
+    background-color: rgba(212, 212, 212, 0.5);
+    cursor: pointer;
+    color: rgb(0, 174, 255);
+}
+
+
+.search-results{
+    position: absolute;
+    width: 100%;
+    background-color: rgb(250, 250, 250);
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    border-radius: 10px;
+    top: 40px;
+    z-index: 1;
+    list-style: none;
+    overflow: hidden;
 }
 
 .input-container button{
