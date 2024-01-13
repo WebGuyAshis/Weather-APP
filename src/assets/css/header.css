@@ -1,0 +1,69 @@
+.header-container{
+    height: 45px;
+    /* background-color: aqua; */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.input-container{
+    height: 35px;
+    width: 350px;
+    border-radius: 30px;
+    display: flex;
+    overflow: hidden;
+    border: 1px solid rgb(189, 189, 189);
+}
+
+.input-container button{
+    height: 100%;
+    width: 35px;
+    border: none;
+    outline: none;
+    background: transparent;
+}
+
+.input-container input{
+    height: 100%;
+    flex: 1;
+    padding-right: 10px;
+    border: none;
+    outline: none;
+    background: transparent;
+}
+.right-side-header{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+.cel-fah-btns {
+    display: flex;
+    gap: 10px;
+}
+
+.fah-btn,.cel-btn{
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    color: rgb(0, 0, 0);
+    border: 1px solid black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.fah-btn:hover{
+    border: 1px solid rgb(0, 229, 0);
+
+}
+
+.cel-btn:hover{
+    border: 1px solid rgb(0, 229, 0);
+}
+
+.active-format{
+    background-color: black;
+    color: white;
+}
