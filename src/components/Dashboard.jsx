@@ -21,14 +21,18 @@ const Dashboard = ({currentWeather}) => {
       const month = dateObject.toLocaleString('en-us', { month: 'short' });
       return `${day}${day % 10 === 1 && day !== 11 ? 'st' : day % 10 === 2 && day !== 12 ? 'nd' : day % 10 === 3 && day !== 13 ? 'rd' : 'th'} ${month}`;
     };
-    
+    function formatTime(timeString) {
+        const dateObject = new Date(timeString);
+        return dateObject.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
+    }
     useEffect(() => {
       // Populate importantWeatherData with data from savedWeatherData
       if (savedWeatherData) {
         const importantData = savedWeatherData.DailyForecasts.map(day => ({
+          place: savedWeatherData.place,
           date: formatDate(day.Date),
-          sunrise: day.Sun.Rise,
-          sunset: day.Sun.Set,
+          sunrise: formatTime(day.Sun.Rise),
+          sunset: formatTime(day.Sun.Set),        
           minTempCelsius: convertToFahrenheit(day.Temperature.Minimum.Value),
           maxTempCelsius: convertToFahrenheit(day.Temperature.Maximum.Value),
           minTempFahrenheit: day.Temperature.Minimum.Value,
@@ -66,7 +70,7 @@ const Dashboard = ({currentWeather}) => {
                     {/* <div className="scroller">
                         ...
                     </div> */}
-
+                    <h3>{importantWeatherData && importantWeatherData[0].place}</h3>
                     <img src={sunnyImg} alt="" className="weather-img" />
                     <p className='today-date'>
                         Today, {importantWeatherData ? importantWeatherData[0].date: "Loading..."}
@@ -123,7 +127,7 @@ const Dashboard = ({currentWeather}) => {
                                 <h4>Wind Status</h4>
                                 <span><b>{importantWeatherData && importantWeatherData[0].windSpeed}</b></span>
                                 <span>mi/h</span>
-                                <p>D: {importantWeatherData && importantWeatherData[0].windDirection}</p>
+                                <p>D:{importantWeatherData && importantWeatherData[0].windDirection}</p>
                             </div>
                         </div>
 
@@ -134,7 +138,7 @@ const Dashboard = ({currentWeather}) => {
                             <div className="my-sunset-sunrise">
                                 <h4>
                                     {/* Location Icon */}
-                                    Kolkata
+                                    {importantWeatherData && importantWeatherData[0].place}
                                 </h4>
                                 {/* Sunrise SUnset Data */}
                                 <div className="my-sunset-sunrise-data">
@@ -142,14 +146,14 @@ const Dashboard = ({currentWeather}) => {
                                         <img src="" alt="" className="sunrise-img" />
                                         <div className="sunrise-data">
                                             <p>Sunrise</p>
-                                            <h5>4:40AM</h5>
+                                            <h5>{importantWeatherData ? importantWeatherData[0].sunrise : "..."}</h5>
                                         </div>
                                     </div>
                                     <div className="sunset">
                                         <img src="" alt="" className="sunrise-img" />
                                         <div className="sunrise-data">
-                                            <p>Sunrise</p>
-                                            <h5>4:40AM</h5>
+                                            <p>Sunset</p>
+                                            <h5>{importantWeatherData ? importantWeatherData[0].sunset : "..."}</h5>
                                         </div>
                                     </div>
                                 </div>

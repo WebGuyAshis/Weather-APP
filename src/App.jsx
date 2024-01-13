@@ -32,12 +32,14 @@ function App() {
   }
 
   // Fetch Weather
-  const getWeatherData = async (locationId) => {
+  const getWeatherData = async (locationId, locationName) => {
     try {
-      console.log("Get Weather data of:",locationId );
+      console.log("Get Weather data of:",locationId, locationName );
       const response = await axios.get(`https://dataservice.accuweather.com/forecasts/v1/daily/5day/${locationId}?apikey=${API_KEY}&details=true`);
       console.log("Weather Data Received:", response.data);
-      setCurrentWeather(response.data)
+      let data = {...response.data}
+      data.place = locationName;
+      setCurrentWeather(data)
     } catch (error) {
       console.log("Error Fetching Weather at the Moment!", error);
       return;
