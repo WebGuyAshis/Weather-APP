@@ -1,19 +1,38 @@
+import { useEffect } from 'react';
 import '../assets/css/dashboard.css'
 import sunnyImg from '../assets/images/sunny.png'
 import Days from './Days';
-const Dashboard = () => {
+const Dashboard = ({currentWeather}) => {
+        console.log("Current Weather From Dashbaord", currentWeather);
+
+        function formatDate(dateString) {
+            const dateObject = new Date(dateString);
+          console.log("Date String:", dateString);
+            const options = { day: 'numeric', month: 'short' };
+            const formattedDate = dateObject.toLocaleDateString('en-US', options);
+            
+            return formattedDate;
+          }
+          let formattedDate;
+        //   useEffect(()=>{
+        //     if(currentWeather){
+        //         console.log("Date to Format:",currentWeather.DailyForecasts[0].Date );
+        //         formattedDate = formatDate(currentWeather.DailyForecasts[0].Date)
+        //       }
+        //   },[])
+
     return (
         <div className="dashboard-container">
             {/* Left Side of Dashboard */}
             <div className="left-dashboard">
                 <div className="todays-weather">
-                    <div className="scroller">
+                    {/* <div className="scroller">
                         ...
-                    </div>
+                    </div> */}
 
                     <img src={sunnyImg} alt="" className="weather-img" />
                     <p className='today-date'>
-                        Today, 13th Jan
+                        Today, {formattedDate ? formattedDate: "Loading..."}
                     </p>
                     <p className='weather-condition'>Sunny</p>
                     <h1 className='temperature'>36&#176;</h1>
