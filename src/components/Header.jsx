@@ -43,6 +43,7 @@ const Header = ({ getLocationKey, getWeatherData, locationList }) => {
 
     return (
         <div className="header-container">
+            <h2>Weather App</h2>
             <div className="search-results-container">
                 <div className="input-container">
                     <button>S</button>

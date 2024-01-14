@@ -113,7 +113,7 @@ const Dashboard = ({currentWeather}) => {
                                 <h1>{importantWeatherData && importantWeatherData[0].uvIndex}</h1>
                             </div>
                             <div className="widgets">
-                                <h4>Humidity</h4>
+                                <h4> Avg Humidity</h4>
                                 <h1>{importantWeatherData && importantWeatherData[0].humidity}</h1>
 
                             </div>
