@@ -2,68 +2,70 @@ import { useEffect, useState } from 'react';
 import '../assets/css/dashboard.css'
 import sunnyImg from '../assets/images/sunny.png'
 import Days from './Days';
-const Dashboard = ({currentWeather}) => {
+import PopupBox from './PopupBox';
+const Dashboard = ({ currentWeather }) => {
     const storedWeatherData = localStorage.getItem("weatherData");
     const initialSavedWeatherData = storedWeatherData ? JSON.parse(storedWeatherData) : null;
-    
+
     const [savedWeatherData, setSavedWeatherData] = useState(initialSavedWeatherData);
     const [importantWeatherData, setImportantWeatherData] = useState(null);
-    
+
     // Function to convert Fahrenheit to Celsius
     const convertToFahrenheit = (fahrenheit) => {
-      return parseInt(Math.round(((fahrenheit - 32) * 5) / 9));
+        return parseInt(Math.round(((fahrenheit - 32) * 5) / 9));
     };
-    
+
     // Function to format date as "13th Jan"
     const formatDate = (dateString) => {
-      const dateObject = new Date(dateString);
-      const day = dateObject.getDate();
-      const month = dateObject.toLocaleString('en-us', { month: 'short' });
-      return `${day}${day % 10 === 1 && day !== 11 ? 'st' : day % 10 === 2 && day !== 12 ? 'nd' : day % 10 === 3 && day !== 13 ? 'rd' : 'th'} ${month}`;
+        const dateObject = new Date(dateString);
+        const day = dateObject.getDate();
+        const month = dateObject.toLocaleString('en-us', { month: 'short' });
+        return `${day}${day % 10 === 1 && day !== 11 ? 'st' : day % 10 === 2 && day !== 12 ? 'nd' : day % 10 === 3 && day !== 13 ? 'rd' : 'th'} ${month}`;
     };
     function formatTime(timeString) {
         const dateObject = new Date(timeString);
         return dateObject.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
     }
     useEffect(() => {
-      // Populate importantWeatherData with data from savedWeatherData
-      if (savedWeatherData) {
-        const importantData = savedWeatherData.DailyForecasts.map(day => ({
-          place: savedWeatherData.place,
-          date: formatDate(day.Date),
-          sunrise: formatTime(day.Sun.Rise),
-          sunset: formatTime(day.Sun.Set),        
-          minTempCelsius: convertToFahrenheit(day.Temperature.Minimum.Value),
-          maxTempCelsius: convertToFahrenheit(day.Temperature.Maximum.Value),
-          minTempFahrenheit: day.Temperature.Minimum.Value,
-          maxTempFahrenheit: day.Temperature.Maximum.Value,
-          humidity: day.Day.RelativeHumidity.Average,
-          airQuality: day.AirAndPollen.find(item => item.Name === 'AirQuality').Value,
-          uvIndex: day.AirAndPollen.find(item => item.Name === 'UVIndex').Value,
-          windSpeed: day.Day.Wind.Speed.Value,
-          windDirection: day.Day.Wind.Direction.English,
-        }));
-    
-        console.log("Important Data:", importantData);
-        setImportantWeatherData(importantData);
-      }
+        // Populate importantWeatherData with data from savedWeatherData
+        if (savedWeatherData) {
+            const importantData = savedWeatherData.DailyForecasts.map(day => ({
+                place: savedWeatherData.place,
+                date: formatDate(day.Date),
+                sunrise: formatTime(day.Sun.Rise),
+                sunset: formatTime(day.Sun.Set),
+                minTempCelsius: convertToFahrenheit(day.Temperature.Minimum.Value),
+                maxTempCelsius: convertToFahrenheit(day.Temperature.Maximum.Value),
+                minTempFahrenheit: day.Temperature.Minimum.Value,
+                maxTempFahrenheit: day.Temperature.Maximum.Value,
+                humidity: day.Day.RelativeHumidity.Average,
+                airQuality: day.AirAndPollen.find(item => item.Name === 'AirQuality').Value,
+                uvIndex: day.AirAndPollen.find(item => item.Name === 'UVIndex').Value,
+                windSpeed: day.Day.Wind.Speed.Value,
+                windDirection: day.Day.Wind.Direction.English,
+            }));
+
+            console.log("Important Data:", importantData);
+            setImportantWeatherData(importantData);
+        }
 
 
     }, [savedWeatherData]);
-    
+
     useEffect(() => {
         console.log("Usefffect Running");
-      if (currentWeather && savedWeatherData !== currentWeather) {
-        // Check if saved WeatherData is not present in localStorage or if currentWeather is different and non-empty
-        if (!savedWeatherData || Object.keys(currentWeather).length > 0) {
-          localStorage.setItem("weatherData", JSON.stringify(currentWeather));
-          setSavedWeatherData(currentWeather);
+        if (currentWeather && savedWeatherData !== currentWeather) {
+            // Check if saved WeatherData is not present in localStorage or if currentWeather is different and non-empty
+            if (!savedWeatherData || Object.keys(currentWeather).length > 0) {
+                localStorage.setItem("weatherData", JSON.stringify(currentWeather));
+                setSavedWeatherData(currentWeather);
+            }
         }
-      }
     }, [currentWeather, savedWeatherData]);
-    
+
     return (
         <div className="dashboard-container">
+            <PopupBox />
             {/* Left Side of Dashboard */}
             <div className="left-dashboard">
                 <div className="todays-weather">
@@ -73,13 +75,12 @@ const Dashboard = ({currentWeather}) => {
                     <h3>{importantWeatherData && importantWeatherData[0].place}</h3>
                     <img src={sunnyImg} alt="" className="weather-img" />
                     <p className='today-date'>
-                        Today, {importantWeatherData ? importantWeatherData[0].date: "Loading..."}
+                        Today, {importantWeatherData ? importantWeatherData[0].date : "Loading..."}
                     </p>
                     <p className='weather-condition'>Sunny</p>
                     <h1 className='temperature'>
-                        {importantWeatherData ? importantWeatherData[0].minTempCelsius: "..."}&#176;/
-                        {importantWeatherData ? importantWeatherData[0].maxTempCelsius: "..."}&#176;</h1>
-
+                        {importantWeatherData ? importantWeatherData[0].minTempCelsius : "..."}&#176;/
+                        {importantWeatherData ? importantWeatherData[0].maxTempCelsius : "..."}&#176;</h1>
                 </div>
 
                 <ul className="recently-viewed-list">
@@ -90,15 +91,17 @@ const Dashboard = ({currentWeather}) => {
                         Recently
                     </li>
                 </ul>
+
             </div>
             {/* Right side */}
+            
             <div className="right-dashboard">
                 <div className="week-view">
                     <h3>5 Days Forecast</h3>
                     <ul className="days-list">
-                        {importantWeatherData && importantWeatherData.map((day, index)=>{
-                            return(
-                                <Days key={index} day={day}/>
+                        {importantWeatherData && importantWeatherData.map((day, index) => {
+                            return (
+                                <Days key={index} day={day} />
                             )
                         })}
                     </ul>

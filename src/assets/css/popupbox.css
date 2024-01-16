@@ -1,0 +1,20 @@
+.popup-container{
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 1;
+    backdrop-filter: blur(40px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.popup-box{
+    padding: 20px;
+    background-color: aliceblue;
+    border-radius: 10px;
+}
