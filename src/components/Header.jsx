@@ -52,7 +52,7 @@ const Header = ({ getLocationKey, getWeatherData, locationList }) => {
                 {/* search results */}
                 {suggestions && (
                     <ul className="search-results">
-                        {locationList ? (
+                        {locationList.length > 0 ? (
                             locationList.map((location, index) => (
                                 <li key={index} className='search-results-items' onClick={() => {
                                     setSuggestions(false)

@@ -3,12 +3,13 @@ import '../assets/css/dashboard.css'
 import sunnyImg from '../assets/images/sunny.png'
 import Days from './Days';
 import PopupBox from './PopupBox';
-const Dashboard = ({ currentWeather }) => {
+const Dashboard = ({getLocationKey, getWeatherData,locationList ,currentWeather}) => {
     const storedWeatherData = localStorage.getItem("weatherData");
     const initialSavedWeatherData = storedWeatherData ? JSON.parse(storedWeatherData) : null;
 
     const [savedWeatherData, setSavedWeatherData] = useState(initialSavedWeatherData);
     const [importantWeatherData, setImportantWeatherData] = useState(null);
+    const [closePopup, setClosePopup] = useState(true)
 
     // Function to convert Fahrenheit to Celsius
     const convertToFahrenheit = (fahrenheit) => {
@@ -65,7 +66,8 @@ const Dashboard = ({ currentWeather }) => {
 
     return (
         <div className="dashboard-container">
-            <PopupBox />
+            {closePopup && <PopupBox getLocationKey={getLocationKey} getWeatherData={getWeatherData} locationList={locationList} setClosePopup={setClosePopup} />}
+            
             {/* Left Side of Dashboard */}
             <div className="left-dashboard">
                 <div className="todays-weather">

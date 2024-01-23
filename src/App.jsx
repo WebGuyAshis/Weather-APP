@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './App.css'
 import Dashboard from './components/Dashboard'
 import Header from './components/Header'
@@ -14,6 +14,41 @@ function App() {
   // const API_KEY = 'LPnA3vnyFVKtV3LfoWIKW1aA4SyIThGK';
   const API_KEY = 'r9tfoAs2nc1HyiAW3v7AOfNtuCqrlYNe';
 
+  const [locationKey, setLocationKey] = useState(null);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const getUserLocation = async () => {
+      console.log("Getting User Location!");
+      try {
+        if ('geolocation' in navigator) {
+          navigator.geolocation.getCurrentPosition(
+            async (position) => {
+              const { latitude, longitude } = position.coords;
+              const locationResponse = await fetch(
+                `https://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=${API_KEY}&q=${latitude},${longitude}`
+              );
+              const locationData = await locationResponse.json();
+              console.log("Location Data:", locationData);
+              setLocationKey(locationData.Key);
+            },
+            (error) => {
+              console.error('Error getting location:', error.message);
+              setError('Error getting your location. Please try again or check your browser settings.');
+            }
+          );
+        } else {
+          console.log('Geolocation is not supported in your browser.');
+          setError('Geolocation is not supported in your browser.');
+        }
+      } catch (error) {
+        console.error('Error:', error.message);
+        setError('Error fetching location data from AccuWeather API.');
+      }
+    };
+
+    getUserLocation();
+  }, []);
 
   const getLocationKey = async (locationString) => {
     console.log("Get Location key of:", locationString);
@@ -49,7 +84,7 @@ function App() {
   return (
     <div className="app">
       <Header getLocationKey={getLocationKey} getWeatherData={getWeatherData} locationList={locationList} />
-      <Dashboard currentWeather={currentWeather} />
+      <Dashboard getLocationKey={getLocationKey} getWeatherData={getWeatherData} locationList={locationList} currentWeather={currentWeather} />
     </div>
   )
 }
