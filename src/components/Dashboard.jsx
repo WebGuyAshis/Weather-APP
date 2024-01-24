@@ -3,6 +3,10 @@ import '../assets/css/dashboard.css'
 import sunnyImg from '../assets/images/sunny.png'
 import Days from './Days';
 import PopupBox from './PopupBox';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
+
+
 const Dashboard = ({getLocationKey, getWeatherData,locationList ,currentWeather}) => {
     const storedWeatherData = localStorage.getItem("weatherData");
     const initialSavedWeatherData = storedWeatherData ? JSON.parse(storedWeatherData) : null;
@@ -40,10 +44,13 @@ const Dashboard = ({getLocationKey, getWeatherData,locationList ,currentWeather}
                 minTempFahrenheit: day.Temperature.Minimum.Value,
                 maxTempFahrenheit: day.Temperature.Maximum.Value,
                 humidity: day.Day.RelativeHumidity.Average,
-                airQuality: day.AirAndPollen.find(item => item.Name === 'AirQuality').Value,
+                // airQuality: day.AirAndPollen.find(item => item.Name === 'AirQuality').Value,
+                hoursOfSun: day.HoursOfSun,
                 uvIndex: day.AirAndPollen.find(item => item.Name === 'UVIndex').Value,
                 windSpeed: day.Day.Wind.Speed.Value,
                 windDirection: day.Day.Wind.Direction.English,
+                dayDesc: day.Day.LongPhrase,
+                nightDesc: day.Night.LongPhrase
             }));
 
             console.log("Important Data:", importantData);
@@ -74,25 +81,44 @@ const Dashboard = ({getLocationKey, getWeatherData,locationList ,currentWeather}
                     {/* <div className="scroller">
                         ...
                     </div> */}
-                    <h3>{importantWeatherData && importantWeatherData[0].place}</h3>
+                    <h2 className='todays-weather-heading'>
+                        <span>                    <FontAwesomeIcon icon={faLocationDot} />
+</span>
+                        {importantWeatherData && importantWeatherData[0].place}</h2>
                     <img src={sunnyImg} alt="" className="weather-img" />
                     <p className='today-date'>
                         Today, {importantWeatherData ? importantWeatherData[0].date : "Loading..."}
                     </p>
                     <p className='weather-condition'>Sunny</p>
                     <h1 className='temperature'>
-                        {importantWeatherData ? importantWeatherData[0].minTempCelsius : "..."}&#176;/
-                        {importantWeatherData ? importantWeatherData[0].maxTempCelsius : "..."}&#176;</h1>
+                        {importantWeatherData ? importantWeatherData[0].maxTempCelsius : "..."}&#176;/
+                        {importantWeatherData ? importantWeatherData[0].minTempCelsius : "..."}&#176;</h1>
                 </div>
+                
+                <div className="todays-desc">
+                    <h3>Description</h3>
+                    <div className="description-data">
+                        <div className="day-desc-data">
+                        <h4>Day</h4>
+                        <p>{importantWeatherData ? importantWeatherData[0].dayDesc : "..."}</p>
+                        </div>
 
-                <ul className="recently-viewed-list">
+                        <div className="night-dec-data">
+                        <h4>Night</h4>
+                        <p>{importantWeatherData ? importantWeatherData[0].nightDesc : "..."}</p>
+                        </div>
+                    </div>
+
+
+                </div>
+                {/* <ul className="recently-viewed-list">
                     <li className="recent-viewed-item">
                         Recently
                     </li>
                     <li className="recent-viewed-item">
                         Recently
                     </li>
-                </ul>
+                </ul> */}
 
             </div>
             {/* Right side */}
@@ -119,19 +145,20 @@ const Dashboard = ({getLocationKey, getWeatherData,locationList ,currentWeather}
                             </div>
                             <div className="widgets">
                                 <h4> Avg Humidity</h4>
-                                <h1>{importantWeatherData && importantWeatherData[0].humidity}</h1>
+                                <h1>{importantWeatherData && importantWeatherData[0].humidity}%</h1>
 
                             </div>
                             <div className="widgets">
-                                <h4>Air Quality</h4>
-                                <h1>{importantWeatherData && importantWeatherData[0].airQuality}</h1>
+                                <h4>Hours Of Sun</h4>
+                                <span><b>{importantWeatherData && importantWeatherData[0].hoursOfSun}</b></span>
+                                <span><strong>hours</strong></span>
 
                             </div>
 
                             <div className="widgets">
                                 <h4>Wind Status</h4>
                                 <span><b>{importantWeatherData && importantWeatherData[0].windSpeed}</b></span>
-                                <span>mi/h</span>
+                                <span><strong>mi/h</strong></span>
                                 <p>D:{importantWeatherData && importantWeatherData[0].windDirection}</p>
                             </div>
                         </div>

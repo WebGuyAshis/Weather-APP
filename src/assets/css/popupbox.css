@@ -98,6 +98,7 @@
     padding: 5px;
     overflow: hidden;
     transition: all 0.3s;
+    cursor: pointer;
 }
 .popup-list-suggestion li:hover{
     background-color: rgb(229, 229, 229);

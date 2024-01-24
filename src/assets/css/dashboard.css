@@ -21,6 +21,10 @@
     color: white;
 }
 
+.todays-weather-heading span{
+    font-size: 20px;
+    margin-right: 8px;
+}
 .weather-img{
     width: 200px;
 }
@@ -28,24 +32,26 @@
     font-size: 4rem;
 }
 
+.todays-desc{
+    margin-top: 15px;
+}
 
-
-.recently-viewed-list{
+.description-data{
     list-style: none;
     background-color: aliceblue;
-    margin-top: 15px;
+    /* margin-top: 15px; */
     border-radius: 10px;
     display: flex;
     flex-direction: column;
-    gap: 15px;
+     gap: 15px;
     padding: 15px;
 }
 
-.recent-viewed-item{
+/* .recent-viewed-item{
     border: 1px solid;
     border-radius: 30px;
     padding: 5px;
-}
+} */
 
 /* Right Side */
 .right-dashboard{
