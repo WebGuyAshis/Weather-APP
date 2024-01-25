@@ -8,13 +8,12 @@
     height: calc(100vh - 45px);
 }
 
-
 /* Left Dash */
 .todays-weather{
     background-color: rgb(113, 191, 255);
     padding: 15px;
     border-radius: 10px;
-    height: 65%;
+    height: 65%; 
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -24,6 +23,31 @@
 .todays-weather-heading span{
     font-size: 20px;
     margin-right: 8px;
+}
+.todays-desc{
+    min-height: calc(35% - 15px);
+    background-color: aqua;
+}
+.description-data{
+    list-style: none;
+    background-color: aliceblue;
+    /* margin-top: 15px; */
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+     gap: 15px;
+    padding: 15px;
+    overflow: auto;
+}
+.day-desc-data{
+    background-color: rgb(255, 255, 255);
+    border-radius: 8px;
+    padding: 15px;
+}
+.night-dec-data{
+    background-color: rgb(255, 255, 255);
+    border-radius: 8px;
+    padding: 15px;
 }
 .weather-img{
     width: 200px;
@@ -36,16 +60,6 @@
     margin-top: 15px;
 }
 
-.description-data{
-    list-style: none;
-    background-color: aliceblue;
-    /* margin-top: 15px; */
-    border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-     gap: 15px;
-    padding: 15px;
-}
 
 /* .recent-viewed-item{
     border: 1px solid;

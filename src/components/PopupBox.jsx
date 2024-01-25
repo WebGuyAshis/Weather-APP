@@ -1,9 +1,9 @@
 import '../assets/css/popupbox.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faL, faXmark } from '@fortawesome/free-solid-svg-icons';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Search from 'antd/es/input/Search';
-const PopupBox = ({ getLocationKey, getWeatherData, locationList, setClosePopup }) => {
+const PopupBox = ({ getLocationKey, getWeatherData, locationList, setClosePopup, userLocation }) => {
 
     const [suggestions, setSuggestions] = useState(false);
     let delaySearch;
@@ -22,6 +22,15 @@ const PopupBox = ({ getLocationKey, getWeatherData, locationList, setClosePopup 
         }, 1000)
     }
 
+    useEffect(() => {
+        // Perform actions when locationList is updated
+        if (locationList.length > 0) {
+            console.log("Location List Of 0", locationList);
+            getWeatherData(locationList[0].Key, userLocation);
+            setClosePopup(false);
+        }
+    }, [locationList]);
+
     return (
         <div className="popup-container">
             <div className="popup-box">
@@ -36,6 +45,10 @@ const PopupBox = ({ getLocationKey, getWeatherData, locationList, setClosePopup 
                         Type your city for the forecast. ☀️🌧️
                     </h1>
                 </label>
+                <h3 style={{ textAlign: "center", color: "grey" }}>Your Location: {userLocation ? userLocation : "Detecting your location..."} </h3>
+                <h3 className='detect-loc'>Continue with the detected Location? <button onClick={()=>{
+                    getLocationKey(userLocation);
+                }} >Yes</button></h3>
                 <div className="popup-input-container">
                     <input type="text" id='popup-input' onChange={handleLocationSearch} />
                     {/* <button>Search</button> */}

@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
 
 
-const Dashboard = ({getLocationKey, getWeatherData,locationList ,currentWeather}) => {
+const Dashboard = ({ getLocationKey, getWeatherData, locationList, currentWeather, userLocation }) => {
     const storedWeatherData = localStorage.getItem("weatherData");
     const initialSavedWeatherData = storedWeatherData ? JSON.parse(storedWeatherData) : null;
 
@@ -73,8 +73,8 @@ const Dashboard = ({getLocationKey, getWeatherData,locationList ,currentWeather}
 
     return (
         <div className="dashboard-container">
-            {closePopup && <PopupBox getLocationKey={getLocationKey} getWeatherData={getWeatherData} locationList={locationList} setClosePopup={setClosePopup} />}
-            
+            {closePopup && <PopupBox getLocationKey={getLocationKey} getWeatherData={getWeatherData} locationList={locationList} setClosePopup={setClosePopup} userLocation={userLocation} />}
+
             {/* Left Side of Dashboard */}
             <div className="left-dashboard">
                 <div className="todays-weather">
@@ -83,7 +83,7 @@ const Dashboard = ({getLocationKey, getWeatherData,locationList ,currentWeather}
                     </div> */}
                     <h2 className='todays-weather-heading'>
                         <span>                    <FontAwesomeIcon icon={faLocationDot} />
-</span>
+                        </span>
                         {importantWeatherData && importantWeatherData[0].place}</h2>
                     <img src={sunnyImg} alt="" className="weather-img" />
                     <p className='today-date'>
@@ -94,18 +94,18 @@ const Dashboard = ({getLocationKey, getWeatherData,locationList ,currentWeather}
                         {importantWeatherData ? importantWeatherData[0].maxTempCelsius : "..."}&#176;/
                         {importantWeatherData ? importantWeatherData[0].minTempCelsius : "..."}&#176;</h1>
                 </div>
-                
+
                 <div className="todays-desc">
                     <h3>Description</h3>
                     <div className="description-data">
                         <div className="day-desc-data">
-                        <h4>Day</h4>
-                        <p>{importantWeatherData ? importantWeatherData[0].dayDesc : "..."}</p>
+                            <h4>Day</h4>
+                            <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro, totam. Hic, rerum dolorum! Nemo totam laborum corporis animi qui sapiente eligendi debitis accusamus illum aliquam voluptatibus earum cum, sequi nisi!{importantWeatherData ? importantWeatherData[0].dayDesc : "..."}</p>
                         </div>
 
                         <div className="night-dec-data">
-                        <h4>Night</h4>
-                        <p>{importantWeatherData ? importantWeatherData[0].nightDesc : "..."}</p>
+                            <h4>Night</h4>
+                            <p>{importantWeatherData ? importantWeatherData[0].nightDesc : "..."}</p>
                         </div>
                     </div>
 
@@ -122,7 +122,7 @@ const Dashboard = ({getLocationKey, getWeatherData,locationList ,currentWeather}
 
             </div>
             {/* Right side */}
-            
+
             <div className="right-dashboard">
                 <div className="week-view">
                     <h3>5 Days Forecast</h3>

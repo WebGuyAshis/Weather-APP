@@ -11,6 +11,8 @@ function App() {
 
   const [locationList, setLocationList] = useState([]);
 
+  const [userLocation, setLocationData] = useState(null);
+
   // const API_KEY = 'LPnA3vnyFVKtV3LfoWIKW1aA4SyIThGK';
   const API_KEY = 'r9tfoAs2nc1HyiAW3v7AOfNtuCqrlYNe';
 
@@ -30,6 +32,7 @@ function App() {
               );
               const locationData = await locationResponse.json();
               console.log("Location Data:", locationData);
+              setLocationData(locationData.LocalizedName);
               setLocationKey(locationData.Key);
             },
             (error) => {
@@ -84,7 +87,7 @@ function App() {
   return (
     <div className="app">
       <Header getLocationKey={getLocationKey} getWeatherData={getWeatherData} locationList={locationList} />
-      <Dashboard getLocationKey={getLocationKey} getWeatherData={getWeatherData} locationList={locationList} currentWeather={currentWeather} />
+      <Dashboard getLocationKey={getLocationKey} getWeatherData={getWeatherData} locationList={locationList} currentWeather={currentWeather} userLocation={userLocation}/>
     </div>
   )
 }
