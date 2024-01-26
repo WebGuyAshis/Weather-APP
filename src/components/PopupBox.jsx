@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faL, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { useState, useEffect } from 'react';
 import Search from 'antd/es/input/Search';
-const PopupBox = ({ getLocationKey, getWeatherData, locationList, setClosePopup, userLocation }) => {
+const PopupBox = ({ getLocationKey, getWeatherData, locationList, setClosePopup, userLocation, getCurrentWeather }) => {
 
     const [suggestions, setSuggestions] = useState(false);
     let delaySearch;
@@ -27,6 +27,7 @@ const PopupBox = ({ getLocationKey, getWeatherData, locationList, setClosePopup,
         if (locationList.length > 0) {
             console.log("Location List Of 0", locationList);
             getWeatherData(locationList[0].Key, userLocation);
+            getCurrentWeather(locationList[0].Key)
             setClosePopup(false);
         }
     }, [locationList]);
@@ -45,10 +46,12 @@ const PopupBox = ({ getLocationKey, getWeatherData, locationList, setClosePopup,
                         Type your city for the forecast. ☀️🌧️
                     </h1>
                 </label>
+
                 <h3 style={{ textAlign: "center", color: "grey" }}>Your Location: {userLocation ? userLocation : "Detecting your location..."} </h3>
-                <h3 className='detect-loc'>Continue with the detected Location? <button onClick={()=>{
+                <h3 className='detect-loc'>Continue with the detected Location? <button onClick={() => {
                     getLocationKey(userLocation);
                 }} >Yes</button></h3>
+
                 <div className="popup-input-container">
                     <input type="text" id='popup-input' onChange={handleLocationSearch} />
                     {/* <button>Search</button> */}
@@ -64,6 +67,7 @@ const PopupBox = ({ getLocationKey, getWeatherData, locationList, setClosePopup,
                                         setClosePopup(false)
                                         setSuggestions(false)
                                         getWeatherData(location.Key, location.LocalizedName);
+                                        getCurrentWeather(location.Key)
                                     }}>{location.LocalizedName}, {location.AdministrativeArea.LocalizedName}, {location.Country.EnglishName}</li>
                                 ))
                             ) : (

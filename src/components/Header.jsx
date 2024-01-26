@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import '../assets/css/header.css'
 import { Switch } from 'antd'
-const Header = ({ getLocationKey, getWeatherData, locationList }) => {
+const Header = ({ getLocationKey, getWeatherData, locationList, getCurrentWeather }) => {
 
     // State for Temperature Format
     const [isCelcius, setIsCelcius] = useState(true)
@@ -57,6 +57,7 @@ const Header = ({ getLocationKey, getWeatherData, locationList }) => {
                                 <li key={index} className='search-results-items' onClick={() => {
                                     setSuggestions(false)
                                     getWeatherData(location.Key, location.LocalizedName);
+                                    getCurrentWeather(location.Key)
                                 }}>{location.LocalizedName}, {location.AdministrativeArea.LocalizedName}, {location.Country.EnglishName}</li>
                             ))
                         ) : (

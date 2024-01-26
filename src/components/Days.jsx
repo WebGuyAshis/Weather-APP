@@ -5,7 +5,7 @@ const Days = ({day})=>{
     return(
         <div className="days-container">
             <img src={sunnyImg} alt="" className='weather-day-img' />
-            <p>{day.date}</p>
+            <h4 style={{textAlign:"center"}}>{day.date}</h4>
             <p>{day.maxTempCelsius}&#176;/{day.minTempCelsius}&#176;</p>
         </div>
     )

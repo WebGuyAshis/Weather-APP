@@ -25,8 +25,8 @@
     margin-right: 8px;
 }
 .todays-desc{
-    min-height: calc(35% - 15px);
-    background-color: aqua;
+    min-height: calc(35vh - 60px);
+    /* background-color: aqua; */
 }
 .description-data{
     list-style: none;
@@ -35,9 +35,14 @@
     border-radius: 10px;
     display: flex;
     flex-direction: column;
-     gap: 15px;
+    gap: 15px;
     padding: 15px;
     overflow: auto;
+    max-height: calc(35vh - 60px);
+}
+
+.description-data::-webkit-scrollbar{
+    display: none;
 }
 .day-desc-data{
     background-color: rgb(255, 255, 255);
@@ -122,7 +127,7 @@
     width: 350px;
     background-color: rgb(187, 232, 255);
     border-radius: 10px;
-    padding: 15px;
+    padding: 10px;
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -142,15 +147,18 @@
 
 
 /* nearby records */
-.nearby-records{
+.additional-records{
     list-style: none;
     border-top: 1px solid rgb(187, 187, 187);
 }
 
-.nearby-records-data{
+.additional-data{
     background-color: aliceblue;
     margin-top: 10px;
-    padding: 5px;
+    padding: 5px 15px;
     border-radius: 30px;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
