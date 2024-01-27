@@ -145,6 +145,7 @@ const Dashboard = ({
                     setClosePopup={setClosePopup}
                     userLocation={userLocation}
                     getCurrentWeather={getCurrentWeather}
+                    weatherNow={weatherNow}
                 />
             )}
 

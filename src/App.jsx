@@ -13,8 +13,9 @@ function App() {
 
   const [userLocation, setLocationData] = useState(null);
 
-  const API_KEY = 'LPnA3vnyFVKtV3LfoWIKW1aA4SyIThGK';
+  // const API_KEY = 'LPnA3vnyFVKtV3LfoWIKW1aA4SyIThGK';
   // const API_KEY = "r9tfoAs2nc1HyiAW3v7AOfNtuCqrlYNe";
+  const API_KEY = 'RswHTVkgyh67b5MsLNjaby7gkr4MQDsK';
 
   const [locationKey, setLocationKey] = useState(null);
   const [error, setError] = useState(null);

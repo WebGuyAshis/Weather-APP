@@ -43,10 +43,6 @@ const Days = ({day})=>{
 
         }
     }, [day]);
-
-    useEffect(()=>{
-        console.log(`Weather Image: ${weatherImg} and Weather Condition : ${day.dayDesc}`);
-    },[weatherImg])
     return(
         <div className="days-container">
             <img src={weatherImg && weatherImg} alt="" className='weather-day-img' />

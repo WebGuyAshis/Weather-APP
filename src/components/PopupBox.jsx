@@ -10,6 +10,7 @@ const PopupBox = ({
     setClosePopup,
     userLocation,
     getCurrentWeather,
+    weatherNow,
 }) => {
     const [suggestions, setSuggestions] = useState(false);
     let delaySearch;
@@ -27,15 +28,32 @@ const PopupBox = ({
             getLocationKey(searchValue);
         }, 1000);
     };
-
+    const [searchDetected, setSearchDetected] = useState(false)
     useEffect(() => {
         // Perform actions when locationList is updated
-        if (locationList.length > 0) {
+        if (locationList.length > 0  && searchDetected) {
             console.log("Location List Of 0", locationList);
             getWeatherData(locationList[0].Key, userLocation);
             getCurrentWeather(locationList[0].Key);
+            setClosePopup(false);
         }
-    }, [locationList]);
+    }, [locationList][searchDetected]);
+
+    // const fetchWeatherData = () => {
+    //     console.log("Inside Fetch Weather................");
+    //     if (locationList.length > 0) {
+    //         console.log("Location List Of 0", locationList);
+    //         getWeatherData(locationList[0].Key, userLocation);
+    //         getCurrentWeather(locationList[0].Key);
+    //         setClosePopup(false);
+    //     }
+    // }
+
+    useEffect(() => {
+        if (weatherNow) {
+            console.log("Weather Now Updated:", weatherNow);
+        }
+    }, [weatherNow]);
 
     return (
         <div className="popup-container">
@@ -66,9 +84,7 @@ const PopupBox = ({
                     <button
                         onClick={() => {
                             getLocationKey(userLocation);
-                            {
-                                locationList && setClosePopup(false);
-                            }
+                            setSearchDetected(true)
                         }}
                     >
                         Yes
