@@ -1,10 +1,19 @@
 import { useEffect, useState } from "react";
 import "../assets/css/dashboard.css";
-import sunnyImg from "../assets/images/sunny.png";
 import Days from "./Days";
 import PopupBox from "./PopupBox";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
+
+import sunnyImg from "../assets/images/sunny.png";
+import sunnyHaze from "../assets/images/hazySun.png";
+import sunCloudy from "../assets/images/sunClouds.png";
+import sunRain from "../assets/images/sunnyRain.png";
+import rainImg from "../assets/images/rainCloudy.png";
+import thunderstormImg from "../assets/images/thunderstorm.png";
+import moonImg from "../assets/images/Moon.png";
+import moonCloudy from "../assets/images/cloudyMoon.png";
+import snowImg from "../assets/images/cloudySnow.png";
 
 const Dashboard = ({
     getLocationKey,
@@ -90,6 +99,41 @@ const Dashboard = ({
             }
         }
     }, [currentWeather, savedWeatherData]);
+    const [weatherImg, setWeatherImg] = useState(null);
+    useEffect(() => {
+        if (weatherNow) {
+            let iconPhrase = weatherNow.IconPhrase.toLowerCase();
+
+            if (iconPhrase.includes("sunny")) {
+                setWeatherImg(sunnyImg);
+            } else if (
+                iconPhrase.includes("moon") ||
+                iconPhrase.includes("moonlight")
+            ) {
+                setWeatherImg(moonImg);
+            } else if (iconPhrase.includes("cloudy")) {
+                setWeatherImg(sunCloudy);
+            } else if (iconPhrase.includes("haze") || iconPhrase.includes("hazy")) {
+                // Set the hazy sun image
+                setWeatherImg(sunnyHaze);
+            } else if (
+                iconPhrase.includes("rain") ||
+                iconPhrase.includes("showers")
+            ) {
+                // Set the rain image
+                setWeatherImg(sunRain);
+            } else if (iconPhrase.includes("thunderstorm")) {
+                // Set the thunderstorm image
+                setWeatherImg(thunderstormImg);
+            } else if (iconPhrase.includes("snow")) {
+                // Set the snow image
+                setWeatherImg(snowImg);
+            } else {
+                // Default image if no match
+                setWeatherImg(sunnyImg);
+            }
+        }
+    }, [weatherNow]);
 
     return (
         <div className="dashboard-container">
@@ -116,28 +160,21 @@ const Dashboard = ({
                         </span>
                         {importantWeatherData && importantWeatherData[0].place}
                     </h2>
-                    <img src={sunnyImg} alt="" className="weather-img" />
+                    <img
+                        src={weatherImg ? weatherImg : sunnyImg}
+                        alt=""
+                        className="weather-img"
+                    />
                     <p className="today-date">
                         Today,{" "}
-                        {importantWeatherData ? importantWeatherData[0].date : "Loading..."}
+                        {importantWeatherData ? importantWeatherData[0].date : "Fetching..."}
                     </p>
                     <p className="weather-condition">
-                        {weatherNow ? weatherNow.IconPhrase : "..."}
+                        {weatherNow ? weatherNow.IconPhrase : "Fetching..."}
                     </p>
-                    <h1 className="temperature">
-                        {weatherNow
-                            ? `${convertToCelcius(weatherNow.Temperature.Value)}°C`
-                            : "..."}
-
-                        {/* {importantWeatherData
-                            ? importantWeatherData[0].maxTempCelsius
-                            : "..."}
-                        &#176;/
-                        {importantWeatherData
-                            ? importantWeatherData[0].minTempCelsius
-                            : "..."}
-                        &#176; */}
-                    </h1>
+                    {weatherNow
+                        ? (<h1 className="temperature">{convertToCelcius(weatherNow.Temperature.Value)}°C</h1>)
+                        : (<span>Fetching...</span>)}
                 </div>
 
                 <div className="todays-desc">
@@ -146,7 +183,7 @@ const Dashboard = ({
                         <div className="day-desc-data">
                             <h4>Day</h4>
                             <p>
-                                {importantWeatherData ? importantWeatherData[0].dayDesc : "..."}
+                                {importantWeatherData ? importantWeatherData[0].dayDesc : "Fetching..."}
                             </p>
                         </div>
 
@@ -155,19 +192,11 @@ const Dashboard = ({
                             <p>
                                 {importantWeatherData
                                     ? importantWeatherData[0].nightDesc
-                                    : "..."}
+                                    : "Fetching..."}
                             </p>
                         </div>
                     </div>
                 </div>
-                {/* <ul className="recently-viewed-list">
-                    <li className="recent-viewed-item">
-                        Recently
-                    </li>
-                    <li className="recent-viewed-item">
-                        Recently
-                    </li>
-                </ul> */}
             </div>
             {/* Right side */}
 
@@ -188,17 +217,15 @@ const Dashboard = ({
                         <div className="widget-blocks">
                             <div className="widgets">
                                 <h4>UV Index</h4>
-                                <h1>
-                                    {importantWeatherData && importantWeatherData[0].uvIndex}
-                                </h1>
+                                {importantWeatherData ? (<h1>{importantWeatherData[0].uvIndex}</h1>) : (<span>Fetching...</span>)}
                             </div>
                             <div className="widgets">
                                 <h4> Humidity</h4>
-                                <h1>
-                                    {/* {importantWeatherData && importantWeatherData[0].humidity}%
-                   */}
-                                    {weatherNow ? `${weatherNow.RelativeHumidity}%` : "..."}
-                                </h1>
+                                {weatherNow ? (
+                                    <h1>{weatherNow.RelativeHumidity}%</h1>
+                                ) : (
+                                    <span>Fetching...</span>
+                                )}
                             </div>
                             <div className="widgets">
                                 <h4>Hours Of Sun</h4>
@@ -215,11 +242,11 @@ const Dashboard = ({
                             <div className="widgets">
                                 <h4>Wind Status</h4>
                                 <span>
-                                    <b>
-                                        {/* {importantWeatherData && importantWeatherData[0].windSpeed}
-                     */}
-                                        {weatherNow ? weatherNow.Wind.Speed.Value : "Fetching..."}
-                                    </b>
+                                    {weatherNow ? (
+                                        <b>{weatherNow.Wind.Speed.Value}</b>
+                                    ) : (
+                                        "Fetching..."
+                                    )}
                                 </span>
                                 <span>
                                     <strong>
@@ -229,7 +256,9 @@ const Dashboard = ({
                                 </span>
                                 <p>
                                     D:
-                                    {weatherNow ? weatherNow.Wind.Direction.English : "Fetching..."}
+                                    {weatherNow
+                                        ? weatherNow.Wind.Direction.English
+                                        : "Fetching..."}
                                 </p>
                             </div>
                         </div>
@@ -249,22 +278,22 @@ const Dashboard = ({
                                         <img src="" alt="" className="sunrise-img" />
                                         <div className="sunrise-data">
                                             <p>Sunrise</p>
-                                            <h5>
-                                                {importantWeatherData
-                                                    ? importantWeatherData[0].sunrise
-                                                    : "..."}
-                                            </h5>
+                                            {importantWeatherData ? (
+                                                <h5>{importantWeatherData[0].sunrise}</h5>
+                                            ) : (
+                                                <span>Fetching...</span>
+                                            )}
                                         </div>
                                     </div>
                                     <div className="sunset">
                                         <img src="" alt="" className="sunrise-img" />
                                         <div className="sunrise-data">
                                             <p>Sunset</p>
-                                            <h5>
-                                                {importantWeatherData
-                                                    ? importantWeatherData[0].sunset
-                                                    : "..."}
-                                            </h5>
+                                            {importantWeatherData ? (
+                                                <h5>{importantWeatherData[0].sunset}</h5>
+                                            ) : (
+                                                <span>Fetching...</span>
+                                            )}
                                         </div>
                                     </div>
                                 </div>
@@ -273,17 +302,29 @@ const Dashboard = ({
                             <ul className="additional-records">
                                 <li className="additional-data">
                                     <strong>RealFeel Temperature : </strong>
-                                    <span> {weatherNow ? `${convertToCelcius(weatherNow.RealFeelTemperature.Value)}°C` : "Fetching..."}</span>
+                                    <span>
+                                        {" "}
+                                        {weatherNow
+                                            ? `${convertToCelcius(
+                                                weatherNow.RealFeelTemperature.Value
+                                            )}°C`
+                                            : "Fetching..."}
+                                    </span>
                                 </li>
 
                                 <li className="additional-data">
-                                <strong>Snow Probability : </strong>
-                                <span>{weatherNow ? weatherNow.SnowProbability:"Fetching..."}</span>
+                                    <strong>Snow Probability : </strong>
+                                    <span>
+                                        {weatherNow ? weatherNow.SnowProbability : "Fetching..."}
+                                    </span>
                                 </li>
 
                                 <li className="additional-data">
-                                <strong>Rain Probability : </strong>
-                                <span>   {weatherNow ? weatherNow.RainProbability:"Fetching..."}</span>
+                                    <strong>Rain Probability : </strong>
+                                    <span>
+                                        {" "}
+                                        {weatherNow ? weatherNow.RainProbability : "Fetching..."}
+                                    </span>
                                 </li>
                             </ul>
                         </div>

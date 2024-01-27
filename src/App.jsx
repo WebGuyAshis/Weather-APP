@@ -3,18 +3,18 @@ import "./App.css";
 import Dashboard from "./components/Dashboard";
 import Header from "./components/Header";
 import axios from "axios";
+import ConnectionChecker from "./ConnectionChecker";
 
 function App() {
   const [currentWeather, setCurrentWeather] = useState(null);
   const [weatherNow, setWeatherNow] = useState(null);
-  const [recentlySearched, setRecentlySearched] = useState([]);
 
   const [locationList, setLocationList] = useState([]);
 
   const [userLocation, setLocationData] = useState(null);
 
-  // const API_KEY = 'LPnA3vnyFVKtV3LfoWIKW1aA4SyIThGK';
-  const API_KEY = "r9tfoAs2nc1HyiAW3v7AOfNtuCqrlYNe";
+  const API_KEY = 'LPnA3vnyFVKtV3LfoWIKW1aA4SyIThGK';
+  // const API_KEY = "r9tfoAs2nc1HyiAW3v7AOfNtuCqrlYNe";
 
   const [locationKey, setLocationKey] = useState(null);
   const [error, setError] = useState(null);
@@ -106,6 +106,8 @@ function App() {
 
   return (
     <div className="app">
+
+      <ConnectionChecker/>
       <Header
         getLocationKey={getLocationKey}
         getWeatherData={getWeatherData}
