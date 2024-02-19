@@ -24,7 +24,6 @@ const ConnectionChecker = () => {
                 <div className='user-offline'>
                     <div className="offline-data">
                         <img src={offlineImg} alt="offIcon" />
-
                         <div>
                             <h3>No Internet Connection</h3>
                             <p>Please Check your Internet Connection and Try Again!</p>
